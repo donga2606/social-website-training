@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}my invites{% endblock %}
+{% block content %}
+{% if is_empty %}
+<h3>No invitation here..</h3>
+{% endif %}
+
+{% for invite in invites %}
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="row">
+                <div class="three wide column">
+                    <img class="ui small circular image" src="{{ invite.avatar.url }}">
+                </div>
+                <div class="thirteen wide column">
+                    <h3>{{ invite.user }}</h3>
+                    <p>{{ invite.bio }}</p>
+                    <a href="">
+                        <button class="ui primary button w-big mb-5">see profile</button>
+                    </a>
+                    <form action="{% url 'profiles:accept_invite' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="sender_pk" value="{{ invite.pk }}">
+                        <button class="ui positive basic button mb-5 w-big">
+                            <i class="check icon"></i>
+                            accept
+                        </button>
+                    </form>
+                    <form action="{% url 'profiles:reject_invite' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="sender_pk" value="{{ invite.pk }}">
+                        <button class="ui negative basic button mb-5 w-big">
+                            <i class="close icon"></i>
+                            decline
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Update post{% endblock %}
+
+{% block content %}
+    <div class="ui segment">
+        <h3>Update post</h3>
+        <form class="ui form" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="ui button primary mt-5">Save change</button>
+        </form>
+    </div>
+{% endblock %}

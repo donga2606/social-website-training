@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}profile detail{% endblock %}
+
+{% block content %}
+<div class="ui grid">
+    <br>
+    <div class="row">
+        <div class="four wide column">
+            <img class="ui medium rounded image" src="{{ profile.avatar.url }}">
+            <h1>{{ profile.user }}</h1>
+            <div class="ui vertical fluid menu">
+                <div class="item">
+                    Posts
+                    <div class="ui label">{{ profile.get_posts_num }}</div>
+                </div>
+                <div class="item">
+                    Likes given
+                    <div class="ui label">{{ profile.get_like_given_number }}</div>
+                </div>
+                <div class="item">
+                    Likes received
+                    <div class="ui label">{{ profile.get_like_received_number }}</div>
+                </div>
+                <div class="item">
+                    Friends
+                    <div class="ui label">{{ profile.get_friends_number }}</div>
+                </div>
+            </div>
+            {% if profile.user not in rel_receiver and profile.user not in rel_sender %}
+                     <form action="{% url 'profiles:send_invite' %}" method="POST">
+                         {% csrf_token %}
+                         <input type="hidden" name="profile_pk" value="{{ profile.pk }}">
+                         <button type="submit" class="ui positive basic button mb-5 w-big">
+                             <i class="plus square icon"></i>
+                             Add to friends
+                         </button>
+                     </form>
+            {% endif %}
+
+            {% if profile.user in rel_receiver and request.user not in profile.friends.all %}
+                     <button class="ui disabled button mb-5 w-big">
+                         <i class="user icon"></i>Waiting to approval
+                     </button>
+            {% endif %}
+
+            {% if request.user in profile.friends.all %}
+                     <form action="{% url 'profiles:remove_friend' %}" method="POST">
+                         {% csrf_token %}
+                         <input type="hidden" name="profile_pk" value="{{ profile.pk }}">
+                         <button type="submit" class="ui negative basic button mb-5 w-big">
+                             <i class="minus square icon"></i>
+                             Remove from friends
+                         </button>
+                     </form>
+            {% endif %}
+        </div>
+        <div class="twelve wide column">
+            {% if len_posts %}
+                {% for post in posts %}
+                    <div class="ui segment fluid">
+                        {{ post.content }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h1>No post of this user</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

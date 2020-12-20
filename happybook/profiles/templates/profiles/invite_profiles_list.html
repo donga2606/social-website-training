@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}all invite profiles{% endblock %}
+{% block content %}
+<h3>Invite friends</h3>
+ <ul>
+     {% for profile in profiles %}
+     <li>{{ profile.user }}</li>
+     {% endfor %}
+ </ul>
+{% endblock %}s
