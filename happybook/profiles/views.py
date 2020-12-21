@@ -70,7 +70,7 @@ def rejected_invitation(request):
 #     }
 #     return render(request, 'profiles/profiles_list.html', context)
 
-@login_required
+# @login_required
 def invite_profiles_list_view(request):
     # This is all profile except the user is requesting
     user = request.user
@@ -80,6 +80,7 @@ def invite_profiles_list_view(request):
         'profiles': profiles,
     }
     return render(request, 'profiles/invite_profiles_list.html', context)
+
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile

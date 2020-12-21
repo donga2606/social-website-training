@@ -2,6 +2,8 @@
 {% url "home" as path_to_home %}
 {% url "profiles:all_profiles" as path_to_all_profiles %}
 {% url "profiles:my_profile" as path_to_my_profile %}
+{% url "profiles:my_invites" as path_to_my_invites %}
+{% url "profiles:all_invite_profiles" as path_to_invites %}
 
 
 <div class="ui inverted menu nav mb-7">
@@ -21,29 +23,29 @@
             <div class="ui floating dropdown icon button teal"> Friends
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="{{ path_to_all_profiles }}" class="item">
+                    <a href="{{ path_to_all_profiles }}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item">
                         All Profiles
                     </a>
-                    <a href="" class="item">
+                    <a href="{{ path_to_invites }}" class="item">
                         Send Invites
                     </a>
-                    <a href="" class="item">
+                    <a href="{{ path_to_my_invites }}" class="{% if request.path == path_to_my_invites %}active{% endif %} item">
                         Received Invites
                     </a>
                 </div>
              </div>
         </div>
-             <div class="item">
+            <div class="item">
               <form action="" method="GET">
                 <div class="ui action left icon input">
                 <input class="prompt" type="text" name='q' placeholder="name of a friend...">
                 <i class="search icon"></i>
                 <button type='submit' class="ui button">Search</button>
                 </div>
-            </form>
+              </form>
             </div>
 
-            <a href="{{ path_to_my_profile }}" class="item">
+            <a href="{{ path_to_my_profile }}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">
                  {{ request.user }}
             </a>
 

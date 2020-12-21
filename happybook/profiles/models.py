@@ -18,7 +18,7 @@ class ProfileManager(models.Manager):
         print('accepted')
         available = [profile for profile in profiles if profile not in accepted]
         print(available)
-        return available
+        return profiles
 
     def get_all_profiles(self, me):
         profiles = Profile.objects.all().exclude(user=me)
