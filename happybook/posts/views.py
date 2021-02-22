@@ -72,7 +72,7 @@ def like_unlike_post(request):
             'likes': post_obj.liked.all().count(),
         }
         return JsonResponse(data, safe=False)
-    return redirect('posts:main_post_view')
+    return redirect('home')
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
